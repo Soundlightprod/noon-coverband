@@ -59,7 +59,13 @@ ${message}`;
 
     if (!resendRes.ok) {
       const errText = await resendRes.text();
-      return json({ ok: false, error: `Resend: ${errText}` }, 502);
+      const keyDebug = {
+        present: !!env.RESEND_API_KEY,
+        length: (env.RESEND_API_KEY || '').length,
+        prefix: (env.RESEND_API_KEY || '').slice(0, 5),
+        suffix: (env.RESEND_API_KEY || '').slice(-3)
+      };
+      return json({ ok: false, error: `Resend: ${errText}`, keyDebug }, 502);
     }
 
     return json({ ok: true });
