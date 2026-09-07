@@ -39,10 +39,12 @@ Objet : ${objet || '-'}
 Message :
 ${message}`;
 
+    const apiKey = await env.RESEND_API_KEY.get();
+
     const resendRes = await fetch('https://api.resend.com/emails', {
       method: 'POST',
       headers: {
-        'Authorization': `Bearer ${env.RESEND_API_KEY}`,
+        'Authorization': `Bearer ${apiKey}`,
         'Content-Type': 'application/json'
       },
       body: JSON.stringify({
@@ -60,10 +62,10 @@ ${message}`;
     if (!resendRes.ok) {
       const errText = await resendRes.text();
       const keyDebug = {
-        present: !!env.RESEND_API_KEY,
-        length: (env.RESEND_API_KEY || '').length,
-        prefix: (env.RESEND_API_KEY || '').slice(0, 5),
-        suffix: (env.RESEND_API_KEY || '').slice(-3)
+        present: !!apiKey,
+        length: (apiKey || '').length,
+        prefix: (apiKey || '').slice(0, 5),
+        suffix: (apiKey || '').slice(-3)
       };
       return json({ ok: false, error: `Resend: ${errText}`, keyDebug }, 502);
     }
