@@ -81,7 +81,7 @@ nav a:hover{color:var(--cyan);}
   filter:drop-shadow(0 0 50px rgba(255,31,199,.28)) drop-shadow(0 0 34px rgba(25,230,255,.2));
 }
 
-.hero-stage{position:relative;display:flex;flex-direction:column;align-items:center;max-width:680px;}
+.hero-stage{position:relative;width:100%;display:flex;flex-direction:column;align-items:center;max-width:680px;}
 .hero-kicker{
   font-size:.78rem;color:var(--muted);letter-spacing:.3em;
   margin-bottom:22px;
@@ -104,7 +104,7 @@ nav a:hover{color:var(--cyan);}
 .hero-ticker span{color:var(--muted);}
 .hero-ticker span b{color:var(--ink);font-weight:600;}
 
-.hero-actions{display:flex;align-items:center;justify-content:center;gap:26px;flex-wrap:wrap;}
+.hero-actions{width:100%;display:flex;align-items:center;justify-content:center;gap:26px;flex-wrap:wrap;}
 .stamp{
   position:relative;
   width:132px;height:132px;border-radius:50%;
@@ -160,6 +160,7 @@ nav a:hover{color:var(--cyan);}
   position:absolute;inset:2px;width:calc(100% - 4px);height:calc(100% - 4px);
   border-radius:50%;object-fit:cover;object-position:center 20%;
 }
+.portrait.p2 .portrait-photo{object-position:center 8%;}
 .portrait-role{
   position:absolute;bottom:14px;left:50%;transform:translateX(-50%);
   background:rgba(5,5,6,.72);backdrop-filter:blur(2px);
@@ -212,12 +213,19 @@ nav a:hover{color:var(--cyan);}
 
 /* ---------- CONFIANCE (stickers) ---------- */
 .confiance{padding:120px 0;text-align:center;background:#0a0810;}
-.sticker-row{display:flex;flex-wrap:wrap;justify-content:center;gap:18px;margin-top:26px;}
+.sticker-row{display:flex;flex-wrap:wrap;justify-content:center;align-items:center;gap:18px;margin-top:26px;}
 .sticker{
   padding:13px 24px;border-radius:8px;font-size:.86rem;
   border:1.5px dashed rgba(255,255,255,.25);color:#d8d6df;
   background:rgba(255,255,255,.02);
 }
+.partner-logo{
+  height:56px;width:auto;max-width:160px;object-fit:contain;
+  border-radius:8px;
+  filter:drop-shadow(0 4px 14px rgba(0,0,0,.4));
+  transition:transform .25s ease;
+}
+.partner-logo:hover{transform:scale(1.06);}
 .sticker:nth-child(odd){transform:rotate(-3deg);}
 .sticker:nth-child(even){transform:rotate(2.5deg);}
 
@@ -368,4 +376,5 @@ footer{padding:30px 0;border-top:1px solid var(--line);background:var(--bg);}
   .portrait-role{font-size:.68rem;padding:4px 12px;}
   .ticket{padding:32px 24px;}
   .hero{padding:130px 20px 50px;}
+  .partner-logo{height:44px;max-width:120px;}
 }
