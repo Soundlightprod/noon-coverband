@@ -48,10 +48,7 @@ ${message}`;
         'Content-Type': 'application/json'
       },
       body: JSON.stringify({
-        // ⚠️ Tant que soundlightprod.fr n'est pas vérifié sur Resend, on utilise l'adresse
-        // d'onboarding fournie par Resend. Une fois le domaine vérifié dans Resend,
-        // remplacer par contact@soundlightprod.fr.
-        from: 'NooN Coverband <onboarding@resend.dev>',
+        from: 'NooN Coverband <contact@soundlightprod.fr>',
         to: ['contact@soundlightprod.fr'],
         reply_to: email,
         subject,
@@ -61,13 +58,7 @@ ${message}`;
 
     if (!resendRes.ok) {
       const errText = await resendRes.text();
-      const keyDebug = {
-        present: !!apiKey,
-        length: (apiKey || '').length,
-        prefix: (apiKey || '').slice(0, 5),
-        suffix: (apiKey || '').slice(-3)
-      };
-      return json({ ok: false, error: `Resend: ${errText}`, keyDebug }, 502);
+      return json({ ok: false, error: `Resend: ${errText}` }, 502);
     }
 
     return json({ ok: true });
