@@ -23,7 +23,11 @@
     </ul>
   </nav>
   <a href="index.html#contact" class="nav-cta">Demander un devis</a>
+  <button class="nav-toggle" id="navToggle" aria-label="Menu" aria-expanded="false">
+    <span></span><span></span><span></span>
+  </button>
 </header>
+<div class="nav-overlay" id="navOverlay"></div>
 
 <section class="hero">
   <div class="hero-stage">
@@ -139,7 +143,20 @@
   <div class="wrap">
     <p class="eyebrow">Vidéos</p>
     <h2 class="h2">Quelques extraits de scène</h2>
-    <!-- TODO: vidéos YouTube à intégrer -->
+    <div class="yt-grid">
+      <div class="yt-item">
+        <div class="yt-embed">
+          <iframe src="https://www.youtube.com/embed/h1sqE5CJxX4" title="NooN Coverband — extrait live" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen loading="lazy"></iframe>
+        </div>
+        <span class="yt-caption">Extrait live</span>
+      </div>
+      <div class="yt-item">
+        <div class="yt-embed">
+          <iframe src="https://www.youtube.com/embed/lz2G_UvzbSM" title="NooN Coverband — extrait live" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen loading="lazy"></iframe>
+        </div>
+        <span class="yt-caption">Extrait live</span>
+      </div>
+    </div>
     <div style="margin-top:40px;">
       <a href="videos.html" class="btn-ghost">Voir toutes les vidéos</a>
     </div>
@@ -217,6 +234,33 @@
     </a>
   </div>
 </footer>
+
+<script>
+  (function(){
+    var toggle = document.getElementById('navToggle');
+    var navList = document.querySelector('nav ul');
+    var overlay = document.getElementById('navOverlay');
+    function closeMenu(){
+      navList.classList.remove('open');
+      toggle.classList.remove('active');
+      overlay.classList.remove('active');
+      toggle.setAttribute('aria-expanded','false');
+    }
+    function openMenu(){
+      navList.classList.add('open');
+      toggle.classList.add('active');
+      overlay.classList.add('active');
+      toggle.setAttribute('aria-expanded','true');
+    }
+    toggle.addEventListener('click', function(){
+      navList.classList.contains('open') ? closeMenu() : openMenu();
+    });
+    overlay.addEventListener('click', closeMenu);
+    navList.querySelectorAll('a').forEach(function(a){
+      a.addEventListener('click', closeMenu);
+    });
+  })();
+</script>
 
 <script>
   document.getElementById('contact-form').addEventListener('submit', async function(e){

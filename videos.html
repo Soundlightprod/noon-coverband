@@ -32,7 +32,11 @@
     </ul>
   </nav>
   <a href="index.html#contact" class="nav-cta">Demander un devis</a>
+  <button class="nav-toggle" id="navToggle" aria-label="Menu" aria-expanded="false">
+    <span></span><span></span><span></span>
+  </button>
 </header>
+<div class="nav-overlay" id="navOverlay"></div>
 
 <section class="videos-hero wrap">
   <a href="index.html" class="back-link">← Page d'accueil</a>
@@ -89,6 +93,33 @@
     </a>
   </div>
 </footer>
+
+<script>
+  (function(){
+    var toggle = document.getElementById('navToggle');
+    var navList = document.querySelector('nav ul');
+    var overlay = document.getElementById('navOverlay');
+    function closeMenu(){
+      navList.classList.remove('open');
+      toggle.classList.remove('active');
+      overlay.classList.remove('active');
+      toggle.setAttribute('aria-expanded','false');
+    }
+    function openMenu(){
+      navList.classList.add('open');
+      toggle.classList.add('active');
+      overlay.classList.add('active');
+      toggle.setAttribute('aria-expanded','true');
+    }
+    toggle.addEventListener('click', function(){
+      navList.classList.contains('open') ? closeMenu() : openMenu();
+    });
+    overlay.addEventListener('click', closeMenu);
+    navList.querySelectorAll('a').forEach(function(a){
+      a.addEventListener('click', closeMenu);
+    });
+  })();
+</script>
 
 </body>
 </html>
