@@ -39,16 +39,17 @@ Objet : ${objet || '-'}
 Message :
 ${message}`;
 
-    const apiKey = await env.RESEND_API_KEY.get();
-
     const resendRes = await fetch('https://api.resend.com/emails', {
       method: 'POST',
       headers: {
-        'Authorization': `Bearer ${apiKey}`,
+        'Authorization': `Bearer ${env.RESEND_API_KEY}`,
         'Content-Type': 'application/json'
       },
       body: JSON.stringify({
-        from: 'NooN Coverband <contact@soundlightprod.fr>',
+        // ⚠️ Tant que soundlightprod.fr n'est pas vérifié sur Resend, on utilise l'adresse
+        // d'onboarding fournie par Resend. Une fois le domaine vérifié dans Resend,
+        // remplacer par contact@soundlightprod.fr.
+        from: 'NooN Coverband <onboarding@resend.dev>',
         to: ['contact@soundlightprod.fr'],
         reply_to: email,
         subject,
