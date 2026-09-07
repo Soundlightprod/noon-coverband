@@ -41,9 +41,9 @@ header{
   position:fixed;top:0;left:0;right:0;z-index:60;
   display:flex;align-items:center;justify-content:space-between;
   padding:22px 40px;
-  mix-blend-mode:difference;
   gap:12px;
   flex-wrap:nowrap;
+  background:linear-gradient(to bottom, rgba(5,5,6,.6), transparent);
 }
 .nav-mark{font-family:'Unbounded',sans-serif;font-weight:700;font-size:.95rem;letter-spacing:.02em;white-space:nowrap;flex-shrink:1;overflow:hidden;text-overflow:ellipsis;}
 nav ul{display:flex;gap:34px;list-style:none;}
@@ -65,7 +65,7 @@ nav a:hover{color:var(--cyan);}
 
 .nav-overlay{
   position:fixed;inset:0;background:rgba(0,0,0,.55);
-  opacity:0;pointer-events:none;transition:opacity .3s ease;z-index:64;
+  opacity:0;pointer-events:none;transition:opacity .3s ease;z-index:55;
 }
 .nav-overlay.active{opacity:1;pointer-events:auto;}
 
