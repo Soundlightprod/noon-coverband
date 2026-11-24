@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+Disallow: /confidentialite
+Sitemap: https://nooncoverband.com/sitemap.xml

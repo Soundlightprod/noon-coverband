@@ -6,27 +6,48 @@ export default {
       return handleContact(request, env);
     }
 
+    // Anciennes adresses : redirection permanente vers les adresses canoniques.
+    if (url.pathname === '/index.html') {
+      return Response.redirect(url.origin + '/' + url.search, 301);
+    }
+    if (url.pathname === '/videos.html') {
+      return Response.redirect(url.origin + '/videos' + url.search, 301);
+    }
+
     // Tout le reste (index.html, videos.html, assets/...) est servi tel quel.
     return env.ASSETS.fetch(request);
   }
 };
 
+const MAX = { nom: 120, prenom: 120, email: 200, court: 200, message: 5000 };
+
+function clean(value, max) {
+  return String(value == null ? '' : value).trim().slice(0, max);
+}
+
 async function handleContact(request, env) {
   try {
     const data = await request.json();
 
-    const nom = (data.nom || '').trim();
-    const prenom = (data.prenom || '').trim();
-    const email = (data.email || '').trim();
-    const jesuis = (data.jesuis || '').trim();
-    const objet = (data.objet || '').trim();
-    const message = (data.message || '').trim();
+    const nom = clean(data.nom, MAX.nom);
+    const prenom = clean(data.prenom, MAX.prenom);
+    const email = clean(data.email, MAX.email);
+    const jesuis = clean(data.jesuis, MAX.court);
+    const objet = clean(data.objet, MAX.court);
+    const evenement = clean(data.evenement, MAX.court);
+    const dateADefinir = data.date_a_definir === true || data.date_a_definir === 'true';
+    const date = dateADefinir ? 'Date à définir' : clean(data.date, MAX.court);
+    const ville = clean(data.ville, MAX.court);
+    const message = clean(data.message, MAX.message);
 
     if (!nom || !email || !message) {
       return json({ ok: false, error: 'Champs requis manquants (nom, e-mail ou message).' }, 400);
     }
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+      return json({ ok: false, error: 'Adresse e-mail invalide.' }, 400);
+    }
 
-    const subject = `${objet || 'Nouveau message'} — ${nom}${prenom ? ' ' + prenom : ''}`;
+    const subject = `${objet || 'Nouveau message'} — ${nom}${prenom ? ' ' + prenom : ''}${ville ? ' (' + ville + ')' : ''}`;
     const text =
 `Nouvelle demande depuis le site NooN Coverband
 
@@ -35,6 +56,10 @@ Prénom : ${prenom || '-'}
 E-mail : ${email}
 Je suis : ${jesuis || '-'}
 Objet : ${objet || '-'}
+
+Type d'événement : ${evenement || '-'}
+Date ou période : ${date || '-'}
+Ville du lieu : ${ville || '-'}
 
 Message :
 ${message}`;
